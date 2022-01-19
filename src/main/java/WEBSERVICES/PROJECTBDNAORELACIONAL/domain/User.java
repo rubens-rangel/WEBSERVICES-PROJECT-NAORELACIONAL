@@ -1,12 +1,18 @@
 package WEBSERVICES.PROJECTBDNAORELACIONAL.domain;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.io.Serializable;
 import java.util.Objects;
 
+@Document
 public class User implements Serializable {
-    private static  final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-    private String Id;
+    @Id
+    private String id;
+
     private String name;
     private String email;
 
@@ -14,17 +20,17 @@ public class User implements Serializable {
     }
 
     public User(String id, String name, String email) {
-        Id = id;
+        this.id = id;
         this.name = name;
         this.email = email;
     }
 
     public String getId() {
-        return Id;
+        return id;
     }
 
     public void setId(String id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getName() {
@@ -48,12 +54,11 @@ public class User implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(Id, user.Id);
+        return Objects.equals(id, user.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(Id);
+        return Objects.hash(id);
     }
-
 }
