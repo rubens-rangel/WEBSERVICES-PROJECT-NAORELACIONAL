@@ -1,6 +1,7 @@
 package WEBSERVICES.PROJECTBDNAORELACIONAL.config;
 
 import WEBSERVICES.PROJECTBDNAORELACIONAL.DTO.AuthorDTO;
+import WEBSERVICES.PROJECTBDNAORELACIONAL.DTO.CommentDTO;
 import WEBSERVICES.PROJECTBDNAORELACIONAL.domain.Post;
 import WEBSERVICES.PROJECTBDNAORELACIONAL.domain.User;
 import WEBSERVICES.PROJECTBDNAORELACIONAL.repository.PostRepository;
@@ -39,9 +40,15 @@ public class instantiation implements CommandLineRunner {
         Post post1 = new Post(null, sdf.parse("21/03/2018"), "partiu viagem", " Vou viajar para são paulo, abraços!", new AuthorDTO(maria));
         Post post2 = new Post(null, sdf.parse("23/03/2018"), "bom dia!", " Acordei bem hoje!", new AuthorDTO(maria));
 
-        postRepository.saveAll(Arrays.asList(post1,post2));
+        CommentDTO c1 = new CommentDTO("Boa viagem mano!", sdf.parse("21/03/2018"), new AuthorDTO(alex));
+        CommentDTO c2 = new CommentDTO("Aproveite", sdf.parse("22/03/2018"), new AuthorDTO(bob));
+        CommentDTO c3 = new CommentDTO("Tenha um ótimo dia!", sdf.parse("23/03/2018"), new AuthorDTO(alex));
 
-        maria.getPosts().addAll(Arrays.asList(post1,post2));
+        post1.getComments().addAll(Arrays.asList(c1, c2));
+        post2.getComments().addAll(Arrays.asList(c3));
+
+        postRepository.saveAll(Arrays.asList(post1, post2));
+        maria.getPosts().addAll(Arrays.asList(post1, post2));
         userRepository.save(maria);
     }
 }
