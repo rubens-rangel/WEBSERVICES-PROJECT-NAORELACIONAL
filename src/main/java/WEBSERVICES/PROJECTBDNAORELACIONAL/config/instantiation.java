@@ -1,7 +1,6 @@
 package WEBSERVICES.PROJECTBDNAORELACIONAL.config;
 
-
-
+import WEBSERVICES.PROJECTBDNAORELACIONAL.DTO.AuthorDTO;
 import WEBSERVICES.PROJECTBDNAORELACIONAL.domain.Post;
 import WEBSERVICES.PROJECTBDNAORELACIONAL.domain.User;
 import WEBSERVICES.PROJECTBDNAORELACIONAL.repository.PostRepository;
@@ -32,14 +31,17 @@ public class instantiation implements CommandLineRunner {
         User alex = new User(null, "Alex Green", "alex@gmail.com");
         User bob = new User(null, "Bob Grey", "bob@gmail.com");
 
-        SimpleDateFormat sdf = new SimpleDateFormat(("dd/MM/yyyy"));
-        sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
-        Post post1 = new Post(null, sdf.parse("21/03/2018"), "partiu viagem", " Vou viajar para são paulo, abraços!", maria);
-        Post post2 = new Post(null, sdf.parse("23/03/2018"), "bom dia!", " Acordei bem hoje!", maria);
-
         userRepository
                 .saveAll(Arrays.asList(maria, alex, bob));
 
+        SimpleDateFormat sdf = new SimpleDateFormat(("dd/MM/yyyy"));
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+        Post post1 = new Post(null, sdf.parse("21/03/2018"), "partiu viagem", " Vou viajar para são paulo, abraços!", new AuthorDTO(maria));
+        Post post2 = new Post(null, sdf.parse("23/03/2018"), "bom dia!", " Acordei bem hoje!", new AuthorDTO(maria));
+
         postRepository.saveAll(Arrays.asList(post1,post2));
+
+        maria.getPosts().addAll(Arrays.asList(post1,post2));
+        userRepository.save(maria);
     }
 }
